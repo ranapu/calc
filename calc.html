@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>
+      table
+    </title>
+    <style>
+      table td {
+        border: 1px solid gray;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+      }
+      .display {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td id="op"></td>
+        <td id="display" class="display" colspan="3">0</td>
+      </tr>
+      <tr>
+        <td>AC</td>
+        <td onclick="back()">&lt;</td>
+        <td>%</td>
+        <td onclick="op('/')">/</td>
+      </tr>
+      <tr>
+        <td onclick="tap(7)">7</td>
+        <td onclick="tap(8)">8</td>
+        <td onclick="tap(9)">9</td>
+        <td onclick="op('*')">*</td>
+      </tr>
+      <tr>
+        <td onclick="tap(4)">4</td>
+        <td onclick="tap(5)">5</td>
+        <td onclick="tap(6)">6</td>
+        <td onclick="op('-')">-</td>
+      </tr>
+      <tr>
+        <td onclick="tap(1)">1</td>
+        <td onclick="tap(2)">2</td>
+        <td onclick="tap(3)">3</td>
+        <td onclick="op('+')">+</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td onclick="tap(0)">0</td>
+        <td>&nbsp;</td>
+        <td onclick="calc()">=</td>
+      </tr>
+    </table>
+    <script>
+      var acc = 0;
+      var op1 = 0;
+      var operator = "";
+
+      function tap(n) {
+        acc = acc * 10 + n;
+        document.getElementById("display").innerText = acc;
+      }
+
+      function op(p) {
+        operator = p;
+        op1 = acc;
+        acc = 0;
+        document.getElementById("op").innerText = p;
+      }
+
+      function calc() {
+        if (operator === "+") {
+          acc = op1 + acc;
+        }
+        if (operator === "-") {
+          acc = op1 - acc;
+        }
+        if (operator === "*") {
+          acc = op1 * acc;
+        }
+        if (operator === "/") {
+          acc = op1 / acc;
+        }
+        document.getElementById("display").innerText = acc;
+        op1 = 0;
+        operator = "";
+        document.getElementById("op").innerText = "";
+      }
+
+      function back() {
+        acc = Math.floor(acc / 10);
+        document.getElementById("display").innerText = acc;
+      }
+    </script>
+  </body>
+</html>
