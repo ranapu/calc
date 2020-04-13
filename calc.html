@@ -22,9 +22,9 @@
         <td id="display" class="display" colspan="3">0</td>
       </tr>
       <tr>
-        <td>AC</td>
+        <td onclick="ac()">AC</td>
         <td onclick="back()">&lt;</td>
-        <td>%</td>
+        <td onclick="percent()">%</td>
         <td onclick="op('/')">/</td>
       </tr>
       <tr>
@@ -56,19 +56,32 @@
       var acc = 0;
       var op1 = 0;
       var operator = "";
-
+      var evaled = false;
       function tap(n) {
+        if (evaled) {
+          evaled = false;
+          acc = 0;
+        }
         acc = acc * 10 + n;
         document.getElementById("display").innerText = acc;
       }
 
       function op(p) {
+        if (operator != "") {
+          calc();
+        }
         operator = p;
         op1 = acc;
         acc = 0;
         document.getElementById("op").innerText = p;
       }
-
+      function percent() {
+        calc();
+        var result = acc / 100;
+        ac();
+        acc = result;
+        document.getElementById("display").innerText = acc;
+      }
       function calc() {
         if (operator === "+") {
           acc = op1 + acc;
@@ -82,6 +95,7 @@
         if (operator === "/") {
           acc = op1 / acc;
         }
+        evaled = true;
         document.getElementById("display").innerText = acc;
         op1 = 0;
         operator = "";
@@ -90,6 +104,12 @@
 
       function back() {
         acc = Math.floor(acc / 10);
+        document.getElementById("display").innerText = acc;
+      }
+      function ac() {
+        op1 = acc = 0;
+        operator = "";
+        document.getElementById("op").innerText = "";
         document.getElementById("display").innerText = acc;
       }
     </script>
